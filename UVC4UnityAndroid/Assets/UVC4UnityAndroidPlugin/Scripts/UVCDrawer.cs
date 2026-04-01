@@ -106,7 +106,7 @@ namespace Serenegiant.UVC
 			// IsUVCEnabledと同様にUVC機器フィルターをインスペクタで設定できるようにする
 			var result = !device.IsRicoh || device.IsTHETA;
 
-			result &= UVCFilter.Match(device, UVCFilters);
+			result &= UVCFilter.Match(device, UVCFilters, manager);
 
 			return result;
 		}
@@ -132,7 +132,7 @@ namespace Serenegiant.UVC
 		 */
 		public bool IsUVCEnabled(UVCManager manager, UVCDevice device)
 		{
-			return UVCFilter.Match(device, UVCFilters);
+			return UVCFilter.Match(device, UVCFilters, manager);
 		}
 
 		/**

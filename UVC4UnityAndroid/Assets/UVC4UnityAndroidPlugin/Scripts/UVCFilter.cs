@@ -22,6 +22,8 @@ namespace Serenegiant.UVC
 		 * インスペクタでフィルターのコメントを表示するための文字列(スクリプトでは使わない)
 		 */
 		public string Description;
+		/* номер в списке подключенных устройств (нумерация с 1)*/
+		public int Num;
 		/**
 		 * マッチするベンダーID
 		 * 0なら全てにマッチする
@@ -67,6 +69,33 @@ namespace Serenegiant.UVC
 			return result;
 		}
 
+		public bool Match(UVCDevice device, UVCManager manager)
+		{
+			bool result = device != null;
+			var devs=manager.GetAttachedDevices().ToArray();
+			bool inList=false;
+			foreach (var d in devs)
+			{
+				if (device.id == d.Id)
+				{
+					inList=true;
+					break;
+				}
+			}
+			if (result)
+			{
+				result &= ((Vid <= 0) || (Vid == device.vid))
+					&& ((Pid <= 0) || (Pid == device.pid))
+					&& (Num<=0 || (devs.Length>(Num-1) && devs[Num-1].Id==device.id) || (devs.Length==(Num-1) && !inList))
+					&& (String.IsNullOrEmpty(DeviceName)
+						|| DeviceName.Equals(device.name)
+						|| (String.IsNullOrEmpty(device.name) || device.name.Contains(DeviceName))
+					);
+			}
+
+			return result;
+		}
+
 		//--------------------------------------------------------------------------------
 
 		/**
@@ -102,6 +131,43 @@ namespace Serenegiant.UVC
 					if (filter != null)
 					{
 						var b = filter.Match(device);
+						if (b && filter.IsExclude)
+						{   // 除外フィルターにヒットしたときはその時点でフィルタ処理を終了
+							result = false;
+							break;
+						}
+						else
+						{   // どれか一つにヒットすればいい
+							result |= b;
+						}
+					}
+					else
+					{
+						// 空フィルターはマッチしたことにする
+						result = true;
+					}
+
+				}
+			}
+
+#if (!NDEBUG && DEBUG && ENABLE_LOG)
+			Console.WriteLine($"{TAG}Match({device}):result={result}");
+#endif
+			return result;
+		}
+
+		public static bool Match(UVCDevice device, UVCFilter[] filters/*Nullable*/, UVCManager manager)
+		{
+			var result = true;
+
+			if ((filters != null) && (filters.Length > 0))
+			{
+				result = false;
+				foreach (var filter in filters)
+				{
+					if (filter != null)
+					{
+						var b = filter.Match(device, manager);
 						if (b && filter.IsExclude)
 						{   // 除外フィルターにヒットしたときはその時点でフィルタ処理を終了
 							result = false;
