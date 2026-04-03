@@ -9,8 +9,8 @@ android {
 	defaultConfig {
 		minSdk 26
 		compileSdk = 35
-		// ndkPath "**NDKPATH**"
-		// ndkVersion "**NDKVERSION**"
+		ndkPath project.findProperty("unity.androidNdkPath")
+		ndkVersion project.findProperty("unity.androidNdkVersion")
 		// lint.targetSdk **APIVERSION**
 		// testOptions.targetSdk **APIVERSION**
 
