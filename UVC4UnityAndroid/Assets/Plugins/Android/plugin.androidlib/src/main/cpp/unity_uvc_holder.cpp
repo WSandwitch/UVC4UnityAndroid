@@ -406,7 +406,7 @@ int UnityUVCHolderGLES::stop() {
 void UnityUVCHolderGLES::on_draw() {
 //	ENTER();
 
-	if (LIKELY(is_running())) {
+	if (LIKELY(is_ready())) {
 		egl::EglContextSaver saver; // レンダリングコンテキストを自動保存自動復帰
 		// ImageReaderを使って映像を受け取るとき, API>=26
 		auto tex = tex_id();
@@ -486,6 +486,10 @@ void UnityUVCHolderGLES::internal_stop() {
 		auto *texture = m_offscreen ? m_offscreen->getOffscreen() : nullptr;
 		SAFE_DELETE(texture);
 		m_offscreen.reset();
+	}
+	if (m_reader) {
+		LOGD("release image reader");
+		m_reader.reset();
 	}
 
 	EXIT();

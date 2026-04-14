@@ -488,7 +488,7 @@ int UnityUVCPlugin::start_uac(const int32_t &device_id) {
 		m_lock.unlock();
 	}
 	if (holder && !holder->is_running()) {
-		// まだ音声取得開始していないとき
+		// まだ音声取得開始していないとき (Audio acquisition hasn't started yet)
 		result = holder->start();
 	}
 
