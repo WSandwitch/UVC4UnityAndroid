@@ -1,6 +1,6 @@
-﻿//#define ENABLE_LOG
+//#define ENABLE_LOG
 /*
- * Copyright (c) 2014 - 2022 t_saki@serenegiant.com 
+ * Copyright (c) 2014 - 2022 t_saki@serenegiant.com
  */
 
 using System;
@@ -35,24 +35,24 @@ namespace Serenegiant
 
 		//--------------------------------------------------------------------------------
 		/**
-		 * ライフサイクルイベント用のデリゲーター
-		 * @param resumed true: onResume, false: onPause
-		 */
+			 * ライフサイクルイベント用のデリゲーター (Lifecycle event delegate)
+			 * @param resumed true: onResume, false: onPause
+			 */
 		public delegate void LifecycleEventHandler(bool resumed);
 
-		/***
-		 * GrantPermissionでパーミッションを要求したときのコールバック用delegateer
-		 * @param permission
-		 * @param grantResult 0:grant, -1:deny, -2:denyAndNeverAskAgain
-		*/
+		/**/
+			 * GrantPermission でパーミッションを要求したときのコールバック用 delegateer (Callback delegate for when permission is requested via GrantPermission)
+			 * @param permission
+			 * @param grantResult 0:grant, -1:deny, -2:denyAndNeverAskAgain
+			 */
 		public delegate void OnPermission(string permission, PermissionGrantResult result);
 
 		//--------------------------------------------------------------------------------
 		/**
-		 * パーミッション要求時のタイムアウト
-		 */
+			 * パーミッション要求時のタイムアウト (Permission request timeout)
+			 */
 		public static float PermissionTimeoutSecs = 30;
-	
+
 		public event LifecycleEventHandler LifecycleEvent;
 
 		public static bool isPermissionRequesting;
@@ -64,17 +64,17 @@ namespace Serenegiant
 			Console.WriteLine($"{TAG}Awake:");
 #endif
 #if UNITY_ANDROID
-			Input.backButtonLeavesApp = true;   // 端末のバックキーでアプリを終了できるようにする
+			Input.backButtonLeavesApp = true;   // 端末のバックキーでアプリを終了できるようにする (Enable app exit via device back button)
 			Initialize();
 #endif
 		}
 
 		//--------------------------------------------------------------------------------
-		// Java側からのイベントコールバック
+		// Java 側からのイベントコールバック (Event callback from Java side)
 
 		/**
-		 * onStartイベント
-		 */
+			 * onStart イベント
+			 */
 		public void OnStartEvent()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -83,8 +83,8 @@ namespace Serenegiant
 		}
 
 		/**
-		 * onResumeイベント
-		 */
+			 * onResume イベント
+			 */
 		public void OnResumeEvent()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -94,8 +94,8 @@ namespace Serenegiant
 		}
 
 		/**
-		 * onPauseイベント
-		 */
+			 * onPause イベント
+			 */
 		public void OnPauseEvent()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -105,8 +105,8 @@ namespace Serenegiant
 		}
 
 		/**
-		 * onStopイベント
-		 */
+			 * onStop イベント
+			 */
 		public void OnStopEvent()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -115,8 +115,8 @@ namespace Serenegiant
 		}
 
 		/**
-		 * パーミッションを取得できた
-		 */
+			 * パーミッションを取得できた (Permission granted)
+			 */
 		public void OnPermissionGrant()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -127,8 +127,8 @@ namespace Serenegiant
 		}
 
 		/**
-		 * パーミッションを取得できなかった
-		 */
+			 * パーミッションを取得できなかった (Permission denied)
+			 */
 		public void OnPermissionDeny()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -139,8 +139,8 @@ namespace Serenegiant
 		}
 
 		/**
-		 * パーミッションを取得できずパーミッションダイアログを再び表示しないように設定された
-		 */
+			 * パーミッションを取得できずパーミッションダイアログを再び表示しないように設定された (Permission denied and dialog will not be shown again)
+			 */
 		public void OnPermissionDenyAndNeverAskAgain()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -153,8 +153,8 @@ namespace Serenegiant
 		//--------------------------------------------------------------------------------
 #if UNITY_ANDROID
 		/**
-		 * プラグインの初期化実行
-		 */
+			 * プラグインの初期化実行 (Initialize plugin)
+			 */
 		private void Initialize()
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -168,10 +168,10 @@ namespace Serenegiant
 		}
 
 		/**
-		 * 指定したパーミッションを保持しているかどうかを取得
-		 * @param permission
-		 * @param 指定したパーミッションを保持している
-		 */
+			 * 指定したパーミッションを保持しているかどうかを取得 (Check if specified permission is granted)
+			 * @param permission
+			 * @param 指定したパーミッションを保持している (Specified permission is granted)
+			 */
 		public static bool HasPermission(string permission)
 		{
 			using (AndroidJavaClass clazz = new AndroidJavaClass(FQCN_PLUGIN))
@@ -182,10 +182,10 @@ namespace Serenegiant
 		}
 
 		/**
-		 * 指定したパーミッションの説明を表示する必要があるかどうかを取得
-		 * @param permission
-		 * @param 指定したパーミッションの説明を表示する必要がある
-		 */
+			 * 指定したパーミッションの説明を表示する必要があるかどうかを取得 (Check if permission rationale needs to be shown)
+			 * @param permission
+			 * @param 指定したパーミッションの説明を表示する必要がある (Permission rationale needs to be shown)
+			 */
 		public static bool ShouldShowRequestPermissionRationale(string permission)
 		{
 			using (AndroidJavaClass clazz = new AndroidJavaClass(FQCN_PLUGIN))
@@ -196,11 +196,11 @@ namespace Serenegiant
 		}
 
 		/**
-		 * パーミッション要求
-		 * こっちはJava側でRationaleの処理等を行わない
-		 * @param permission
-		 * @param callback
-		 */
+			 * パーミッション要求
+			 * こっちは Java 側で Rationale の処理等を行わない (This side does not handle Rationale in Java)
+			 * @param permission
+			 * @param callback
+			 */
 		public static IEnumerator RequestPermission(string permission, OnPermission callback)
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -232,16 +232,16 @@ namespace Serenegiant
 			{
 				callback(permission, PermissionGrantResult.PERMISSION_GRANT);
 			}
-	
+
 			yield break;
 		}
 
 		/**
-		 * パーミッション要求
-		 * こっちはJava側でRationaleの処理等を行う
-		 * @param permission
-		 * @param callback
-		 */
+			 * パーミッション要求
+			 * こっちは Java 側で Rationale の処理等を行う (This side handles Rationale in Java)
+			 * @param permission
+			 * @param callback
+			 */
 		public static IEnumerator GrantPermission(string permission, OnPermission callback)
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -273,14 +273,14 @@ namespace Serenegiant
 			{
 				callback(permission, PermissionGrantResult.PERMISSION_GRANT);
 			}
-	
+
 			yield break;
 		}
 
 		/**
-		 * カメラパーミッションを要求
-		 * @param callback
-		 */
+			 * カメラパーミッションを要求 (Request camera permission)
+			 * @param callback
+			 */
 		public static IEnumerator GrantCameraPermission(OnPermission callback)
 		{
 #if (!NDEBUG && DEBUG && ENABLE_LOG)
@@ -288,12 +288,12 @@ namespace Serenegiant
 #endif
 			if (CheckAndroidVersion(23))
 			{
-				// Android9以降ではUVC機器アクセスにもCAMERAパーミッションが必要
+				// Android9 以降では UVC 機器アクセスにも CAMERA パーミッションが必要 (Android 9+ requires CAMERA permission for UVC device access)
 				yield return GrantPermission(PERMISSION_CAMERA, callback);
 			}
 			else
 			{
-				// Android 6 未満ではパーミッション要求処理は不要
+				// Android 6 未満ではパーミッション要求処理は不要 (Android versions before 6 don't need permission request handling)
 				callback(PERMISSION_CAMERA, PermissionGrantResult.PERMISSION_GRANT);
 			}
 
@@ -304,8 +304,8 @@ namespace Serenegiant
 		//================================================================================
 
 		/**
-		 * UnityPlayerActivityを取得
-		 */
+			 * UnityPlayerActivity を取得
+			 */
 		public static AndroidJavaObject GetCurrentActivity()
 		{
 			using (AndroidJavaClass playerClass = new AndroidJavaClass(FQCN_UNITY_PLAYER))
@@ -315,10 +315,10 @@ namespace Serenegiant
 		}
 
 		/**
-		 * 指定したバージョン以降かどうかを確認
-		 * @param apiLevel
-		 * @return true: 指定したバージョン以降で実行されている, false: 指定したバージョンよりも古い端末で実行されている
-		 */
+			 * 指定したバージョン以降かどうかを確認 (Check if running on specified Android version or later)
+			 * @param apiLevel
+			 * @return true: 指定したバージョン以降で実行されている (Running on specified version or later), false: 指定したバージョンよりも古い端末で実行されている (Running on older device)
+			 */
 		public static bool CheckAndroidVersion(int apiLevel)
 		{
 			using (var VERSION = new AndroidJavaClass("android.os.Build$VERSION"))

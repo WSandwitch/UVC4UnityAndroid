@@ -8,14 +8,23 @@ EditorUserSettings:
     GraphicsSettingsInspector_UserSettings:
       value: 18134705175a055722080a3115371d4a0d55006876786860616b0471b8b16561baa960bfb16c6d696055b969526c5422be481902e60e06021f0bdb1b1df3240a01c036c417cd5d46893b09c7c1099ccadb94c9
       flags: 0
+    QuickInstaller_com.unity.purchasing_installRecorded:
+      value: 2550581500
+      flags: 0
+    QuickInstaller_com.unity.services.levelplay_installRecorded:
+      value: 2550581500
+      flags: 0
     RecentlyUsedSceneGuid-0:
-      value: 5602000207575e085d565b7547275e44404f402e787a25607e704d61b6e1366c
+      value: 0708575050060a5e5f57547a442109444e151c727f2c72607b7f1b36b6b63768
       flags: 0
     RecentlyUsedSceneGuid-1:
       value: 0007525707560f5f0c0b5e71497b06444116412b7f7c7068742f1b65e1b4656d
       flags: 0
     RecentlyUsedSceneGuid-2:
-      value: 0708575050060a5e5f57547a442109444e151c727f2c72607b7f1b36b6b63768
+      value: 5602000207575e085d565b7547275e44404f402e787a25607e704d61b6e1366c
+      flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 5a54065051010c0b0c08097a422608444f164c7b782c75362f7a1835bbb36069
       flags: 0
     RecentlyUsedScenePath-0:
       value: 224247031146466e3b2d58171e2a4b0937191c3823212200213c1a3aecaf0739eff73aecf4750c3f3c0cea2f4b0a093ae60b3a5aa6535a1b220df80014b1051d18d101

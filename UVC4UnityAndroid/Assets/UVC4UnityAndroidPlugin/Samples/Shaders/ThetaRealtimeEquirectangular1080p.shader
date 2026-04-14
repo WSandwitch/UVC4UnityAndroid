@@ -1,4 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 // Copyright (c) 2015 Nora
 // Released under the MIT license
@@ -76,23 +76,23 @@ Shader "Theta/RealtimeEquirectangular1080p"
 			v2f vert (appdata v)
 			{
 				v2f o;
-				// MVP行列を掛ける
-				// mul(UNITY_MATRIX_MVP, v.vertex)と同じ処理だけどパフォーマンス良いらしい
+				// MVP 行列を掛ける (Multiply by MVP matrix)
+				// mul(UNITY_MATRIX_MVP, v.vertex) と同じ処理だけどパフォーマンス良いらしい (Same as mul(UNITY_MATRIX_MVP, v.vertex) but better performance)
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
-				// プラットフォームによる射影行列の違いを吸収
+				// プラットフォームによる射影行列の違いを吸収 (Absorb platform-specific projection matrix differences)
 				o.uv.y *= _ProjectionParams.x;
 				return o;
 			}
 
-			// ２次元変換行列 （３次元目は平行移動用に使う）
+			// 2 次元変換行列 (3 次元目は平行移動用に使う) (2D transformation matrix (3rd dimension used for translation))
 			float3x3 rotate_matrix_radian(float rot) {
 				float sinX = sin(rot);
 				float cosX = cos(rot);
 				return float3x3(cosX, -sinX, 0, sinX, cosX, 0, 0, 0, 1);
 			}
 
-			// Scale/Rotate/Translate Matrix群
+			// Scale/Rotate/Translate Matrix 群 (Scale/Rotate/Translate Matrix group)
 			float3x3 rotate_matrix_degree(float rot) {
 				return rotate_matrix_radian(rot * UNITY_PI / 180.0);
 			}
@@ -122,39 +122,39 @@ Shader "Theta/RealtimeEquirectangular1080p"
 				return mat;
 			}
 
-			// forward用変換行列
-			// (0,0)を中心として半径1の範囲の座標、をテクスチャ座標に変換するmatrix
-			// 計算量多いようだが、すべてコンパイル時に解決されるはず。
+			// forward 用変換行列 (Transformation matrix for forward)
+			// (0,0) を中心として半径 1 の範囲の座標、をテクスチャ座標に変換する matrix (Matrix to convert coordinates in radius 1 range centered at (0,0) to texture coordinates)
+			// 計算量多いようだが、すべてコンパイル時に解決されるはず (Calculation is heavy but should all be resolved at compile time)
 			float3x3 forward_matrix3() {
 				float3x3 mat = float3x3(1, 0, 0, 0, 1, 0, 0, 0, 1);
 				mat = mul(mat, rotate_matrix_degree(_FORWARD_ROTATION_DEGREE));
 				mat = mul(mat, translate_matrix(float2(0.5, 0.5)));
-				// 裏側なので逆方向にする
+				// 裏側なので逆方向にする (Reverse direction for back side)
 				mat = mul(mat, scaleX_matrix(-1));
 				mat = mul(mat, translateX_matrix(1));
-				// XのUV幅は半分なので x0.5
+				// X の UV 幅は半分なので x0.5 (X UV width is half so x0.5)
 				mat = mul(mat, scaleX_matrix(0.5));
-				// オフセット
+				// オフセット (Offset)
 				mat = mul(mat, translate_matrix(_UVOffset.yx));
 				mat = mul(mat, texture_matrix3());
 				return mat;
 			}
 
-			// backward用変換行列
-			// (0,0)を中心として半径1の範囲の座標、をテクスチャ座標に変換するmatrix
-			// 計算量多いようだが、すべてコンパイル時に解決されるはず。
+			// backward 用変換行列 (Transformation matrix for backward)
+			// (0,0) を中心として半径 1 の範囲の座標、をテクスチャ座標に変換する matrix (Matrix to convert coordinates in radius 1 range centered at (0,0) to texture coordinates)
+			// 計算量多いようだが、すべてコンパイル時に解決されるはず (Calculation is heavy but should all be resolved at compile time)
 			float3x3 backward_matrix3() {
 				float3x3 mat = float3x3(1, 0, 0, 0, 1, 0, 0, 0, 1);
 				mat = mul(mat, rotate_matrix_degree(_BACKWARD_ROTATION_DEGREE));
 				mat = mul(mat, translate_matrix(float2(0.5, 0.5)));
-				// 片目分のUV幅は半分なので x0.5
+				// 片目分の UV 幅は半分なので x0.5 (UV width for one eye is half so x0.5)
 				mat = mul(mat, scaleX_matrix(0.5));
-				// 右側なので +0.5
+				// 右側なので +0.5 (Right side so +0.5)
 				mat = mul(mat, translateX_matrix(0.5));
-				// Y逆方向
+				// Y 逆方向 (Y reverse direction)
 				mat = mul(mat, scaleY_matrix(-1));
 				mat = mul(mat, translateY_matrix(1));
-				// オフセット
+				// オフセット (Offset)
 				mat = mul(mat, translate_matrix(_UVOffset.wz));
 				mat = mul(mat, texture_matrix3());
 				return mat;
@@ -171,7 +171,7 @@ Shader "Theta/RealtimeEquirectangular1080p"
 			float4 frag(v2f i) : SV_Target
 			{
 //				float2 revUV = i.uv;
-				float2 revUV = float2(i.uv.x, 1.0 - i.uv.y);	// THETAの画像そのままだと上下が入れ替わってしまうので対策
+				float2 revUV = float2(i.uv.x, 1.0 - i.uv.y);		// THETA の画像そのままだと上下が入れ替わってしまうので対策 (THETA images need flip to prevent upside-down)
 				if (i.uv.x <= 0.5) {
 					revUV.x = 1.0 - revUV.x * 2.0;
 				}
@@ -190,10 +190,10 @@ Shader "Theta/RealtimeEquirectangular1080p"
 				st *= r / sqrt(1.0 - p.z * p.z);
 				st *= _RADIUS;
 
-				// stは (0,0)を中心としたFisheye座標
+				// st は (0,0) を中心とした Fisheye 座標 (st is fisheye coordinates centered at (0,0))
 				float4 col;
 				if (i.uv.x <= 0.5)
-				{	// 後
+				{		// Back (後)
 					st = convert_for_backward(st);
 					#if !defined(SHADER_API_OPENGL)
 					col = tex2Dlod(_MainTex, float4(st, 0.0, 0.0));
@@ -202,7 +202,7 @@ Shader "Theta/RealtimeEquirectangular1080p"
 					#endif
 				}
 				else {
-					// 前
+					// Front (前)
 					st = convert_for_forward(st);
 					#if !defined(SHADER_API_OPENGL)
 					col = tex2Dlod(_MainTex, float4(st, 0.0, 0.0));

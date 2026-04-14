@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/UVC4UnityAndroidPlugin/Samples/Scenes/UVC2DScene.unity
     guid: d9c653ce29884b648bd83d4066fe46c0
   - enabled: 0
@@ -26,4 +26,8 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/UVC4UnityAndroidPlugin/Samples/Scenes/ThetaZ1Scene.unity
     guid: ff3c74b77a7823147b9544bb43b1ce56
+  - enabled: 1
+    path: Assets/Scenes/UVCWithCurve.unity
+    guid: 9e2644e0afe82e749a414d3fb3ef9341
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

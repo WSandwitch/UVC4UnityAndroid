@@ -145,14 +145,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548459541}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -224,7 +224,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 9
+  serializedVersion: 10
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 1
   m_RealtimeEnvironmentLighting: 1
@@ -239,6 +239,12 @@ LightingSettings:
   m_BakeResolution: 40
   m_Padding: 2
   m_LightmapCompression: 2
+  m_LightmapPackingMode: 1
+  m_LightmapPackingMethod: 0
+  m_XAtlasPackingAttempts: 16384
+  m_XAtlasBruteForce: 0
+  m_XAtlasBlockAlign: 0
+  m_XAtlasRepackUnderutilizedLightmaps: 1
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -726,7 +732,7 @@ PrefabInstance:
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: UACEnabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
@@ -736,12 +742,12 @@ PrefabInstance:
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: DefaultWidth
-      value: 1280
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: DefaultHeight
-      value: 720
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
@@ -841,7 +847,17 @@ PrefabInstance:
     - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: UACEnabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
+        type: 3}
+      propertyPath: DefaultWidth
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
+        type: 3}
+      propertyPath: DefaultHeight
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
@@ -851,7 +867,7 @@ PrefabInstance:
     - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: RenderBeforeSceneRendering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7953172909807438327, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}

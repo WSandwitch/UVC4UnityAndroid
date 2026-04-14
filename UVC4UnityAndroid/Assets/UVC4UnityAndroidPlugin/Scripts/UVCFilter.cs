@@ -1,6 +1,6 @@
-﻿//#define ENABLE_LOG
+//#define ENABLE_LOG
 /*
- * Copyright (c) 2014 - 2022 t_saki@serenegiant.com 
+ * Copyright (c) 2014 - 2022 t_saki@serenegiant.com
  */
 
 using System;
@@ -11,45 +11,45 @@ using UnityEngine;
 namespace Serenegiant.UVC
 {
 	/**
-	 * UVC機器のフィルタ定義クラス
-	 */
+		 * UVC 機器のフィルタ定義クラス (UVC device filter definition class)
+		 */
 	[Serializable]
 	public class UVCFilter
 	{
 		private const string TAG = "UVCFilter#";
 
 		/**
-		 * インスペクタでフィルターのコメントを表示するための文字列(スクリプトでは使わない)
-		 */
+			 * インスペクタでフィルターのコメントを表示するための文字列 (スクリプトでは使わない) (String to display filter comment in inspector (not used in script))
+			 */
 		public string Description;
-		/* номер в списке подключенных устройств (нумерация с 1)*/
+		/* номер в списке подключенных устройств (нумерация с 1) (device number in connected device list (1-based indexing))*/
 		public int Num;
 		/**
-		 * マッチするベンダーID
-		 * 0なら全てにマッチする
-		 */
+			 * マッチするベンダー ID (Matching vendor ID)
+			 * 0 なら全てにマッチする (0 matches all)
+			 */
 		public int Vid;
 		/**
-		 * マッチするプロダクトID
-		 * 0なら全てにマッチする
-		 */
+			 * マッチするプロダクト ID (Matching product ID)
+			 * 0 なら全てにマッチする (0 matches all)
+			 */
 		public int Pid;
 		/**
-		 * マッチする機器名
-		 * null/emptyならチェックしない
-		 */
+			 * マッチする機器名 (Matching device name)
+			 * null/empty ならチェックしない (null/empty means no check)
+			 */
 		public string DeviceName;
 		/**
-		 * 除外フィルタとして扱うかどうか
-		 */
+			 * 除外フィルタとして扱うかどうか (Whether to treat as exclude filter)
+			 */
 		public bool IsExclude;
 
 		//--------------------------------------------------------------------------------
 
 		/**
-		 * 引数のUVC機器にマッチするかどうかを取得
-		 * @param device
-		 */
+			 * 引数の UVC 機器にマッチするかどうかを取得 (Check if argument UVC device matches)
+			 * @param device
+			 */
 		public bool Match(UVCDevice device)
 		{
 			bool result = device != null;
@@ -59,10 +59,10 @@ namespace Serenegiant.UVC
 				result &= ((Vid <= 0) || (Vid == device.vid))
 					&& ((Pid <= 0) || (Pid == device.pid))
 					&& (String.IsNullOrEmpty(DeviceName)
-						|| DeviceName.Equals(device.name)
-						|| DeviceName.Equals(device.name)
-						|| (String.IsNullOrEmpty(device.name) || device.name.Contains(DeviceName))
-						|| (String.IsNullOrEmpty(device.name) || device.name.Contains(DeviceName))
+							|| DeviceName.Equals(device.name)
+							|| DeviceName.Equals(device.name)
+							|| (String.IsNullOrEmpty(device.name) || device.name.Contains(DeviceName))
+							|| (String.IsNullOrEmpty(device.name) || device.name.Contains(DeviceName))
 					);
 			}
 
@@ -99,26 +99,26 @@ namespace Serenegiant.UVC
 		//--------------------------------------------------------------------------------
 
 		/**
-		 * UVC機器のフィルタ処理用
-		 * filtersがnullの場合はマッチしたことにする
-		 * 除外フィルターにヒットしたときはその時点で評価を終了しfalseを返す
-		 * 除外フィルターにヒットせず通常フィルターのいずれかにヒットすればtrueを返す
-		 * @param device
-		 * @param filters Nullable
-		 */
+			 * UVC 機器のフィルタ処理用 (For UVC device filter processing)
+			 * filters が null の場合はマッチしたことにする (Treat as matched if filters is null)
+			 * 除外フィルターにヒットしたときはその時点で評価を終了し false を返す (Return false immediately if hit exclude filter)
+			 * 除外フィルターにヒットせず通常フィルターのいずれかにヒットすれば true を返す (Return true if hit normal filter)
+			 * @param device
+			 * @param filters Nullable
+			 */
 		public static bool Match(UVCDevice device, List<UVCFilter> filters/*Nullable*/)
 		{
 			return Match(device, filters != null ? filters.ToArray() : (null as UVCFilter[]));
 		}
 
 		/**
-		 * UVC機器のフィルタ処理用
-		 * filtersがnullの場合はマッチしたことにする
-		 * 除外フィルターにヒットしたときはその時点で評価を終了しfalseを返す
-		 * 除外フィルターにヒットせず通常フィルターのいずれかにヒットすればtrueを返す
-		 * @param device
-		 * @param filters Nullable
-		 */
+			 * UVC 機器のフィルタ処理用 (For UVC device filter processing)
+			 * filters が null の場合はマッチしたことにする (Treat as matched if filters is null)
+			 * 除外フィルターにヒットしたときはその時点で評価を終了し false を返す (Return false immediately if hit exclude filter)
+			 * 除外フィルターにヒットせず通常フィルターのいずれかにヒットすれば true を返す (Return true if hit normal filter)
+			 * @param device
+			 * @param filters Nullable
+			 */
 		public static bool Match(UVCDevice device, UVCFilter[] filters/*Nullable*/)
 		{
 			var result = true;
@@ -132,18 +132,18 @@ namespace Serenegiant.UVC
 					{
 						var b = filter.Match(device);
 						if (b && filter.IsExclude)
-						{   // 除外フィルターにヒットしたときはその時点でフィルタ処理を終了
+						{		// If hit exclude filter, end filter processing immediately (除外フィルターにヒットしたときはその時点でフィルタ処理を終了)
 							result = false;
 							break;
 						}
 						else
-						{   // どれか一つにヒットすればいい
+						{		// Hit any filter is enough (どれか一つにヒットすればいい)
 							result |= b;
 						}
 					}
 					else
 					{
-						// 空フィルターはマッチしたことにする
+						// Treat empty filter as matched (空フィルターはマッチしたことにする)
 						result = true;
 					}
 
@@ -169,18 +169,18 @@ namespace Serenegiant.UVC
 					{
 						var b = filter.Match(device, manager);
 						if (b && filter.IsExclude)
-						{   // 除外フィルターにヒットしたときはその時点でフィルタ処理を終了
+						{		// If hit exclude filter, end filter processing immediately (除外フィルターにヒットしたときはその時点でフィルタ処理を終了)
 							result = false;
 							break;
 						}
 						else
-						{   // どれか一つにヒットすればいい
+						{		// Hit any filter is enough (どれか一つにヒットすればいい)
 							result |= b;
 						}
 					}
 					else
 					{
-						// 空フィルターはマッチしたことにする
+						// Treat empty filter as matched (空フィルターはマッチしたことにする)
 						result = true;
 					}
 
