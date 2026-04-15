@@ -139,14 +139,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb1bc18f15fa0546b998062ea4861a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultWidth: 1280
-  DefaultHeight: 720
+  DefaultWidth: 1920
+  DefaultHeight: 1080
   UACEnabled: 0
   UVCFilters:
-  - Description: C920R
+  - Description: 
     Num: 0
-    Vid: 1133
-    Pid: 2093
+    Vid: 0
+    Pid: 8496
     DeviceName: 
     IsExclude: 0
   RenderTargets:
@@ -666,8 +666,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
+      propertyPath: DefaultWidth
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
+        type: 3}
+      propertyPath: DefaultHeight
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
+        type: 3}
       propertyPath: UVCFilters.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
@@ -687,12 +697,17 @@ PrefabInstance:
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: UVCFilters.Array.data[0].Pid
-      value: 2140
+      value: 8496
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: UVCFilters.Array.data[0].Vid
-      value: 1133
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
+        type: 3}
+      propertyPath: UVCFilters.Array.data[1].Pid
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
@@ -701,8 +716,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
+      propertyPath: UVCFilters.Array.data[0].IsExclude
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
+        type: 3}
       propertyPath: UVCFilters.Array.data[0].Description
-      value: C922
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 464229095961303548, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
@@ -772,12 +792,12 @@ PrefabInstance:
     - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: DefaultWidth
-      value: 1280
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}
       propertyPath: DefaultHeight
-      value: 720
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 7716261784260357304, guid: fa65cd0b0e2ffad4180eabf8fe755f9a,
         type: 3}

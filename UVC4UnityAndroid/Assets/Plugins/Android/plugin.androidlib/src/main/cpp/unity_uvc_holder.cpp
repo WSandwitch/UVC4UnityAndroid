@@ -79,6 +79,8 @@
 #define MEAS_RESET
 #endif
 
+
+
 namespace serenegiant::unity {
 
 /**
@@ -302,6 +304,9 @@ void UnityUVCHolder::update_supported_ctrls() {
 	EXIT();
 }
 
+#undef ENTER
+#define ENTER() LOGW("%s %d", __FUNCTION__, m_device_id);
+
 //================================================================================
 /**
  * コンストラクタ
@@ -363,6 +368,7 @@ int UnityUVCHolderGLES::start(
 		LOGD("tex=%d", m_tex_id_unity);
 		m_first_frame_rendered = false;
 		result = UnityUVCHolder::start(tex, tex_width, tex_height);
+		LOGW("UnityUVCHolder::start result = %d", result);
 		if (!m_reader) {
 			LOGD("create ImageReader");
 			m_reader = std::make_unique<media::ImageReader>(
@@ -406,7 +412,7 @@ int UnityUVCHolderGLES::stop() {
 void UnityUVCHolderGLES::on_draw() {
 //	ENTER();
 
-	if (LIKELY(is_running())) {
+	if (LIKELY(is_ready())) {
 		egl::EglContextSaver saver; // レンダリングコンテキストを自動保存自動復帰
 		// ImageReaderを使って映像を受け取るとき, API>=26
 		auto tex = tex_id();
@@ -461,9 +467,11 @@ void UnityUVCHolderGLES::on_draw() {
 				m_reader->delete_image(image);
 				LOGW("AAImage_getHardwareBuffer failed,%d", status);
 			}
+		}else{
+			LOGW("No image %d", m_device_id);
 		}
 	} else {
-		LOGW("No source pipeline");
+		LOGW("No source pipeline %d", m_device_id);
 	}
 
 	//	EXIT();
@@ -478,6 +486,10 @@ void UnityUVCHolderGLES::internal_stop() {
 	if (m_last_image) {
 		AAImage_delete(m_last_image);
 		m_last_image = nullptr;
+	}
+	if (m_reader) {
+		LOGD("release image reader");
+		m_reader.reset();
 	}
 	if (m_offscreen) {
 		MARK("release offscreen");

@@ -59,7 +59,6 @@ namespace serenegiant::unity {
  */
 class UnityUVCHolder {
 private:
-	const int32_t m_device_id;
 	const int m_gl_version;
 	usb_manager_t *m_manager;
 	video_size_t m_current_size;
@@ -71,6 +70,7 @@ private:
 	void update_supported_ctrls();
 protected:
 public:
+	const int32_t m_device_id;
 	/**
 	 * コンストラクタ
 	 * @param manager
@@ -241,6 +241,14 @@ public:
 	[[nodiscard]]
 	inline GLuint tex_id() const { return m_tex_id_unity; };
 
+	/**
+	 * 描画処理を実行可能かどうかを取得する
+	 * @return
+	 */
+	[[nodiscard]]
+	inline bool is_ready() const {
+		return is_running() && m_reader && m_first_frame_rendered;
+	}
 	/**
 	 * 映像取得を開始
 	 * Unity側のレンダーイベントに応じてon_drawを呼び出さないと描画されない
