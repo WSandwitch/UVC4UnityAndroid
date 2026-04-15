@@ -410,10 +410,16 @@ int UnityUVCHolderGLES::stop() {
  */
 /*public*/
 void UnityUVCHolderGLES::on_draw() {
-//	ENTER();
+	ENTER();
 
 	if (LIKELY(is_ready())) {
 		egl::EglContextSaver saver; // レンダリングコンテキストを自動保存自動復帰
+		{
+			GLenum egl_error = glGetError();
+			if (egl_error != GL_NO_ERROR) {
+				LOGW("EglContextSaver %d error 0x%x", m_device_id, egl_error);
+			}
+		}
 		// ImageReaderを使って映像を受け取るとき, API>=26
 		auto tex = tex_id();
 		if (UNLIKELY(!m_offscreen)) {
@@ -449,15 +455,39 @@ void UnityUVCHolderGLES::on_draw() {
 				AAHardwareBuffer_acquire(buffer);    // API>=26
 				{    // AHardwareBuffer -> EglImageWrapperでラップ
 					m_wrapper->unwrap();
+					{
+						GLenum egl_error = glGetError();
+						if (egl_error != GL_NO_ERROR) {
+							LOGW("Unwrap %d error 0x%x", m_device_id, egl_error);
+						}
+					}
 					if (m_last_image) {
 						m_reader->delete_image(m_last_image);
 					}
 					m_last_image = image;
 					m_wrapper->wrap(buffer);    // これはテクスチャにbindした状態になる
+					{
+						GLenum egl_error = glGetError();
+						if (egl_error != GL_NO_ERROR) {
+							LOGW("Wrap %d error 0x%x", m_device_id, egl_error);
+						}
+					}
 					m_offscreen->bind();
+					{
+						GLenum egl_error = glGetError();
+						if (egl_error != GL_NO_ERROR) {
+							LOGW("Draw %d error 0x%x", m_device_id, egl_error);
+						}
+					}
 					{
 						// テクスチャをバックバッファとしたオフスクリーンへEglImageWrapperをGLESで描画
 						m_gl_renderer->draw(m_wrapper.get(), m_wrapper->tex_matrix());
+						{
+							GLenum egl_error = glGetError();
+							if (egl_error != GL_NO_ERROR) {
+								LOGW("Draw %d error 0x%x", m_device_id, egl_error);
+							}
+						}
 					}
 					m_offscreen->unbind();
 				}
@@ -474,6 +504,7 @@ void UnityUVCHolderGLES::on_draw() {
 		LOGW("No source pipeline %d", m_device_id);
 	}
 
+	LOGW("on_draw end %d", m_device_id);
 	//	EXIT();
 }
 
